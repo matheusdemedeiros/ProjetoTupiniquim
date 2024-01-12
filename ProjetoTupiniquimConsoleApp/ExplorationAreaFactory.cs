@@ -16,6 +16,7 @@ namespace ProjetoTupiniquim.ConsoleApp
             var showInputCoordinates = true;
             while (showInputCoordinates)
             {
+                ShowInputDescription();
                 var input = GetUserInput();
                 IsExit(input);
 
@@ -25,16 +26,13 @@ namespace ProjetoTupiniquim.ConsoleApp
                     continue;
                 }
 
-                ShowInputDescription();
-
                 var areaCoordinatesLimits = input.Split(' ');
-
                 if (areaCoordinatesLimits.Length == 2)
                 {
                     if (
-                        int.TryParse(areaCoordinatesLimits[0], out int limitX) == false ||
-                    int.TryParse(areaCoordinatesLimits[1], out int limitY) == false
-                    )
+                            int.TryParse(areaCoordinatesLimits[0], out int limitX) == false ||
+                            int.TryParse(areaCoordinatesLimits[1], out int limitY) == false
+                        )
                     {
                         ShowErrorMessage("SÓ PODEM SER INFORMADOS VALORES NUMÉRICOS MAIORES QUE ZERO!!\nTENTE NOVAMENTE!!");
                     }
@@ -44,6 +42,7 @@ namespace ProjetoTupiniquim.ConsoleApp
                     }
                 }
             }
+
             return null;
         }
 
@@ -63,17 +62,18 @@ namespace ProjetoTupiniquim.ConsoleApp
         }
         private bool ValidateInput(string input)
         {
-            return string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input);
+            return string.IsNullOrEmpty(input) ||
+                    string.IsNullOrWhiteSpace(input);
         }
 
         private void IsExit(string input)
         {
             if (input == "s" || input == "S")
             {
-                Console.Clear();
+                _defaultOutput.Clear();
                 Environment.Exit(0);
             }
         }
     }
 }
-}
+
