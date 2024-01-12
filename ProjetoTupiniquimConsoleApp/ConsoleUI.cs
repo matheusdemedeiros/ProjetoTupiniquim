@@ -4,38 +4,35 @@ namespace ProjetoTupiniquim.ConsoleApp
 {
     internal class ConsoleUI
     {
-        private string _separator = "============================================================================================";
-        private ConsoleColor _defaultColor = ConsoleColor.Yellow;        
+        private static string _separator = "============================================================================================";
+        private static ConsoleColor _defaultColor = ConsoleColor.Yellow;
+
         public void ShowInfoMessage(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            WriteSeparator();
-            Console.WriteLine(message);
-            SetConsoleToDefaultColor();
+            ShowMessage(message, ConsoleColor.Blue);
         }
 
         public void ShowDescriptionMessage(string message, bool keepCurrentColor = false)
         {
-            var currentColor = keepCurrentColor ?  Console.ForegroundColor : ;
-
-            if (keepCurrentColor)
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            WriteSeparator();
-            Console.WriteLine(message);
-            {
-
-            }
-            SetConsoleToDefaultColor();
+            var currentColor = keepCurrentColor ? Console.ForegroundColor : ConsoleColor.Cyan;
+            ShowMessage(message, currentColor);
         }
 
         public void ShowErrorMessage(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            WriteSeparator();
-            Console.WriteLine(message);
-            SetConsoleToDefaultColor();
+            ShowMessage(message, ConsoleColor.Red);
         }
-        
+
+        public void Clear()
+        {
+            Console.Clear();
+        }
+
+        public string ReadInput()
+        {
+            return Console.ReadLine();
+        }
+
         private void WriteSeparator()
         {
             Console.WriteLine($"\n {_separator}");
@@ -43,19 +40,25 @@ namespace ProjetoTupiniquim.ConsoleApp
 
         private void ShowMessage(string message, ConsoleColor messageColor)
         {
-            var currentColor = Console.ForegroundColor;
-            Console.ForegroundColor = messageColor;
+            SetConsoleColor(messageColor);
+            WriteSeparator();
             Console.WriteLine(message);
-
+            SetConsoleToDefaultColor();
         }
+
         private static void SetConsoleToDefaultColor(bool keepPreviousColor = false)
         {
-            if (keepPreviousColor)
-            {
+            SetConsoleColor(_defaultColor);
+        }
 
-            }
+        private static void SetConsoleColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+        private static ConsoleColor GetCurrentColor()
+        {
+            return Console.ForegroundColor;
         }
     }
 }
